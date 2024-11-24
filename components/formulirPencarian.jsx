@@ -10,7 +10,7 @@ export default function FormulirPencarian() {
 
   return (
     <View className="gap-y-4 w-96 mx-auto bg-white p-4 rounded-md shadow">
-      {/* Judul Dengan Ikon Kereta */}
+      {/* Judul */}
       <View className="flex-row items-center mb-4">
         <Ionicons name="train" size={24} color="#FFCD33" />
         <Text
@@ -57,7 +57,7 @@ export default function FormulirPencarian() {
         keyboardType="default"
       />
 
-      {/* Tombol Pencarian dengan Ikon */}
+      {/* Tombol Pencarian Dengan Ikon */}
       <TouchableOpacity
         activeOpacity={0.7}
         className="bg-[#1CBF8E] py-3 rounded-md mt-4 flex-row items-center justify-center"

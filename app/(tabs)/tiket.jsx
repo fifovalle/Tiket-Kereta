@@ -1,8 +1,11 @@
 import React from "react";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 export default function TiketKereta() {
+  const pengarah = useRouter();
+
   return (
     <View className="flex-1 bg-[#F5F5F5]">
       {/* Bagian Kepala */}
@@ -19,9 +22,14 @@ export default function TiketKereta() {
               Kumpulan Tiket Kereta Anda
             </Text>
           </View>
-          <View className="rounded-full border-2 border-[#94A3B8] p-2">
+
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => pengarah.push("/screens/keranjang")}
+            className="rounded-full border-2 border-[#94A3B8] p-2"
+          >
             <Ionicons name="cart-outline" size={20} color="white" />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 
