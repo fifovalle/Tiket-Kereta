@@ -32,7 +32,7 @@ const useMasukDenganEmailKataSandi = () => {
 
       setPesanSnackbar("Berhasil masuk!");
       setTampilkanSnackbar(true);
-      pengarah.push("/(tabs)");
+      pengarah.push("/(tabs)/beranda");
     } catch (error) {
       switch (error.code) {
         case "auth/user-not-found":

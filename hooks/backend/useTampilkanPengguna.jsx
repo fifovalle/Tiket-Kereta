@@ -17,7 +17,7 @@ export const useTampilkanPengguna = () => {
         .get()
         .then((doc) => {
           if (doc.exists) {
-            setPengguna(doc.data());
+            setPengguna({ id: doc.id, ...doc.data() });
           }
         })
         .catch((err) => {

@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import useKeluar from "@/hooks/backend/useKeluar";
 import { formatNomorTelpon } from "@/constants/formatNomorTelpon";
 import { useTampilkanPengguna } from "@/hooks/backend/useTampilkanPengguna";
 
 export default function Profil() {
   const pengarah = useRouter();
 
+  const { keluar, sedangMemuatKeluar } = useKeluar();
   const { pengguna, sedangMemuatTampilkanPengguna } = useTampilkanPengguna();
 
   if (sedangMemuatTampilkanPengguna) {
@@ -102,6 +104,27 @@ export default function Profil() {
             </Text>
           </View>
         </View>
+
+        {/* Keluar */}
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => keluar()}
+          disabled={sedangMemuatKeluar}
+          className={`bg-white rounded-lg p-4 flex-row items-center mb-4 shadow-md ${
+            sedangMemuatKeluar ? "opacity-50" : ""
+          }`}
+        >
+          <Ionicons name="log-out-outline" size={24} color="#03314B" />
+          <View className="ml-4">
+            <Text className="text-lg text-[#0F172A] font-bold">
+              {sedangMemuatKeluar ? (
+                <ActivityIndicator color="#03314B" size="small" />
+              ) : (
+                "Keluar"
+              )}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

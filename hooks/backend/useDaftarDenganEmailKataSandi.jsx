@@ -37,7 +37,7 @@ const useDaftarDenganEmailKataSandi = () => {
 
       setPesanSnackbar("Pendaftaran berhasil!");
       setTampilkanSnackbar(true);
-      pengarah.push("/(tabs)");
+      pengarah.push("/(tabs)/beranda");
     } catch (error) {
       setPesanSnackbar(`Terjadi kesalahan: ${error.message}`);
       setTampilkanSnackbar(true);

@@ -13,7 +13,7 @@ export default function TataLetakTabs() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="beranda"
         options={{
           tabBarIcon: ({ focused }) => opsiIkonTabs(focused, "home"),
           tabBarLabel: "Beranda",
