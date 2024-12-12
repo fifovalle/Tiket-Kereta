@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Text,
@@ -25,8 +26,11 @@ export default function Daftar() {
     setKataSandi,
     nomorTelepon,
     namaBelakang,
+    pesanSnackbar,
     setNamaBelakang,
     setNomorTelepon,
+    tampilkanSnackbar,
+    setTampilkanSnackbar,
     perlihatkanKataSandi,
     setPerlihatkanKataSandi,
     daftarDenganEmailKataSandi,
@@ -200,6 +204,14 @@ export default function Daftar() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <Snackbar
+        visible={tampilkanSnackbar}
+        onDismiss={() => setTampilkanSnackbar(false)}
+        duration={3000}
+      >
+        {pesanSnackbar}
+      </Snackbar>
     </ScrollView>
   );
 }

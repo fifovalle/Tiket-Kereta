@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Text,
   View,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
   ScrollView,
   TextInput,
 } from "react-native";
+import useMasukDenganEmailKataSandi from "@/hooks/backend/useMasukDenganEmailKataSandi";
 
 export default function Masuk() {
   const pengarah = useRouter();
   const gambar = require("@/assets/layarMasuk.png");
 
-  const [email, setEmail] = useState("");
-  const [kataSandi, setKataSandi] = useState("");
-  const [perlihatkanKataSandi, setPerlihatkanKataSandi] = useState(false);
+  const {
+    email,
+    setEmail,
+    kataSandi,
+    setKataSandi,
+    pesanSnackbar,
+    tampilkanSnackbar,
+    perlihatkanKataSandi,
+    setTampilkanSnackbar,
+    setPerlihatkanKataSandi,
+    masukDenganEmailKataSandi,
+    sedangMemuatMasukDenganEmailKataSandi,
+  } = useMasukDenganEmailKataSandi();
 
   return (
     <ScrollView
@@ -96,15 +109,24 @@ export default function Masuk() {
       {/* Bagian Tombol */}
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => pengarah.push("/(tabs)")}
-        className="mt-4 w-full"
+        onPress={() => masukDenganEmailKataSandi()}
+        disabled={sedangMemuatMasukDenganEmailKataSandi || !email || !kataSandi}
+        className={`mt-4 w-full ${
+          sedangMemuatMasukDenganEmailKataSandi || !email || !kataSandi
+            ? "opacity-50"
+            : ""
+        }`}
       >
         <View className="bg-[#03314B] h-12 rounded-lg items-center justify-center shadow-lg">
           <Text
             className="text-lg text-white ml-2"
             style={{ fontFamily: "RobotoBold" }}
           >
-            Lanjutkan
+            {sedangMemuatMasukDenganEmailKataSandi ? (
+              <ActivityIndicator color="white" size="small" />
+            ) : (
+              "Masuk"
+            )}
           </Text>
         </View>
       </TouchableOpacity>
@@ -129,6 +151,14 @@ export default function Masuk() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <Snackbar
+        visible={tampilkanSnackbar}
+        onDismiss={() => setTampilkanSnackbar(false)}
+        duration={3000}
+      >
+        {pesanSnackbar}
+      </Snackbar>
     </ScrollView>
   );
 }

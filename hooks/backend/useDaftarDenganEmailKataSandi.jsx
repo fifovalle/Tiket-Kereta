@@ -10,6 +10,8 @@ const useDaftarDenganEmailKataSandi = () => {
   const [kataSandi, setKataSandi] = useState("");
   const [namaBelakang, setNamaBelakang] = useState("");
   const [nomorTelepon, setNomorTelepon] = useState("");
+  const [pesanSnackbar, setPesanSnackbar] = useState("");
+  const [tampilkanSnackbar, setTampilkanSnackbar] = useState(false);
   const [perlihatkanKataSandi, setPerlihatkanKataSandi] = useState(false);
   const [
     sedangMemuatDaftarDenganEmailKataSandi,
@@ -33,9 +35,13 @@ const useDaftarDenganEmailKataSandi = () => {
         Tanggal_Pembuatan_Akun: Timestamp.now(),
       });
 
+      setPesanSnackbar("Pendaftaran berhasil!");
+      setTampilkanSnackbar(true);
       pengarah.push("/(tabs)");
     } catch (error) {
-      console.log("Terjadi kesalahan:", error.message);
+      setPesanSnackbar(`Terjadi kesalahan: ${error.message}`);
+      setTampilkanSnackbar(true);
+      console.error("Terjadi kesalahan:", error.message);
     } finally {
       setSedangMemuatDaftarDenganEmailKataSandi(false);
     }
@@ -50,8 +56,11 @@ const useDaftarDenganEmailKataSandi = () => {
     setKataSandi,
     nomorTelepon,
     namaBelakang,
+    pesanSnackbar,
     setNamaBelakang,
     setNomorTelepon,
+    tampilkanSnackbar,
+    setTampilkanSnackbar,
     perlihatkanKataSandi,
     setPerlihatkanKataSandi,
     daftarDenganEmailKataSandi,
