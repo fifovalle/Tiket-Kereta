@@ -9,34 +9,34 @@ export default function Jelajahi() {
   return (
     <View className="flex-1 bg-[#FFFFFF]">
       {/* Bagian Kepala */}
-      <View className="h-24 bg-[#03314B] items-center justify-center">
-        <View className="flex-row items-center justify-between w-full px-4">
+      <View className="h-36 -mb-8 bg-[#03314B] p-4">
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => pengarah.push("/screens/keranjang")}
+          className="p-2 mt-4 items-end"
+        >
+          <Ionicons name="cart-outline" size={28} color="white" />
+        </TouchableOpacity>
+
+        <View className="flex items-center justify-between w-full">
           <View>
             <Text
-              className="text-xl text-[#FFFFFF]"
+              className="text-xl text-center text-[#FFFFFF]"
               style={{ fontFamily: "RobotoBlack" }}
             >
               Jelajahi
             </Text>
-            <Text className="text-sm text-[#94A3B8]">
+            <Text className="text-sm text-center text-[#94A3B8]">
               Kumpulan Rute Perjalanan
             </Text>
           </View>
-
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => pengarah.push("/screens/keranjang")}
-            className="rounded-full border-2 border-[#94A3B8] p-2"
-          >
-            <Ionicons name="cart-outline" size={20} color="white" />
-          </TouchableOpacity>
         </View>
       </View>
 
-      {/* Rute Perjalanan */}
+      {/* Pilih Rute Perjalanan */}
       <View className="mt-6 px-4">
-        <Text className="text-lg font-semibold text-black mb-4">
-          Rute Perjalanan
+        <Text className="text-lg text-black text-center mt-4 mb-2" style={{ fontFamily: "RobotoBlack" }}>
+          Pilih Rute Perjalanan
         </Text>
         {/* Kartu Tiket */}
         <TouchableOpacity

@@ -11,7 +11,7 @@ export default function PilihanTiket() {
   return (
     <View className="flex-1 bg-white">
       {/* Kepala */}
-      <View className="flex-row items-center justify-between px-4 py-4 bg-white shadow-sm">
+      <View className="flex-row items-center justify-between px-4 pt-12 bg-white shadow-sm">
         <TouchableOpacity activeOpacity={0.7} onPress={() => pengarah.back()}>
           <Text className="text-lg text-gray-800">
             <Ionicons name="arrow-back" size={24} color="black" />
@@ -43,7 +43,7 @@ export default function PilihanTiket() {
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
-          className="m-4 p-4 w-60 bg-[#1CBF8E] rounded-lg"
+          className="m-4 p-4 w-60 bg-[#03314B] rounded-lg"
         >
           <Text
             className="text-center text-white"

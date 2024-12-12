@@ -26,24 +26,22 @@ export default function PilihKursi() {
       return (
         <TouchableOpacity
           key={kursi}
-          className={`w-12 h-12 m-3 flex justify-center items-center rounded-lg shadow-md ${
-            kursiTidakTersediaSaatIni
-              ? "bg-gray-300"
-              : kursiTerpilihSaatIni
-              ? "bg-[#1CBF8E] border border-green-700"
+          className={`w-12 h-12 m-3 flex justify-center items-center rounded-lg shadow-md ${kursiTidakTersediaSaatIni
+            ? "bg-gray-300"
+            : kursiTerpilihSaatIni
+              ? "bg-[#94A3B8] border border-[#94A3B8]"
               : "bg-white border border-gray-300"
-          }`}
+            }`}
           disabled={kursiTidakTersediaSaatIni}
           onPress={() => handlePilihKursi(kursi)}
         >
           <Text
-            className={`font-semibold ${
-              kursiTidakTersediaSaatIni
-                ? "text-gray-400"
-                : kursiTerpilihSaatIni
+            className={`font-semibold ${kursiTidakTersediaSaatIni
+              ? "text-gray-400"
+              : kursiTerpilihSaatIni
                 ? "text-white"
                 : "text-[#94A3B8]"
-            }`}
+              }`}
             style={{ fontFamily: "RobotoBold" }}
           >
             {baris}
@@ -57,7 +55,7 @@ export default function PilihKursi() {
   return (
     <View className="flex-1 bg-gray-100">
       {/* Kepala */}
-      <View className="flex-row items-center justify-between px-4 py-4 bg-white shadow-sm">
+      <View className="flex-row items-center justify-between px-4 pt-12 bg-white shadow-sm">
         <TouchableOpacity activeOpacity={0.7} onPress={() => pengarah.back()}>
           <Text className="text-lg text-gray-800">
             <Ionicons name="arrow-back" size={24} color="black" />
@@ -81,7 +79,7 @@ export default function PilihKursi() {
       {/* Status */}
       <View className="flex-row justify-evenly items-center my-4">
         <View className="flex-row items-center">
-          <View className="w-5 h-5 bg-[#1CBF8E] rounded-full mr-2" />
+          <View className="w-5 h-5 bg-[#94A3B8] rounded-full mr-2" />
           <Text className="text-[#94A3B8]" style={{ fontFamily: "RobotoBold" }}>
             Dipilih
           </Text>
@@ -93,7 +91,7 @@ export default function PilihKursi() {
           </Text>
         </View>
         <View className="flex-row items-center">
-          <View className="w-5 h-5 bg-gray-300 rounded-full mr-2" />
+          <View className="w-5 h-5 bg-[#D1D4DB] rounded-full mr-2" />
           <Text className="text-[#94A3B8]" style={{ fontFamily: "RobotoBold" }}>
             Tidak Tersedia
           </Text>
@@ -112,15 +110,13 @@ export default function PilihKursi() {
           {kursiTerpilih ? `Kursi ${kursiTerpilih}` : "Tidak Ada Kursi Dipilih"}
         </Text>
         <TouchableOpacity
-          className={`mt-4 py-3 items-center rounded-lg shadow-lg ${
-            kursiTerpilih ? "bg-[#1CBF8E]" : "bg-gray-300"
-          }`}
+          className={`mt-4 py-3 items-center rounded-lg shadow-lg ${kursiTerpilih ? "bg-[#03314B]" : "bg-gray-300"
+            }`}
           disabled={!kursiTerpilih}
         >
           <Text
-            className={`text-lg font-semibold ${
-              kursiTerpilih ? "text-white" : "text-gray-500"
-            }`}
+            className={`text-lg font-semibold ${kursiTerpilih ? "text-white" : "text-gray-500"
+              }`}
             style={{ fontFamily: "RobotoBold" }}
           >
             Konfirmasi

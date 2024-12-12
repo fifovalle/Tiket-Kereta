@@ -52,12 +52,12 @@ export default function InformasiTiket() {
         className="flex-row items-center justify-between"
       >
         <Text
-          className="mt-2 text-[#1CBF8E]"
+          className="mt-2 text-[#000]"
           style={{ fontFamily: "RobotoBold" }}
         >
           Lihat Selengkapnya
         </Text>
-        <Ionicons name="arrow-forward" size={18} color="#1CBF8E" />
+        <Ionicons name="arrow-forward" size={18} color="#000" />
       </TouchableOpacity>
     </View>
   );

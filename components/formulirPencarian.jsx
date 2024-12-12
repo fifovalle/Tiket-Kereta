@@ -4,15 +4,17 @@ import { Picker } from "@react-native-picker/picker";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
 export default function FormulirPencarian() {
-  const [dari, setDari] = useState("");
   const [ke, setKe] = useState("");
+  const [dari, setDari] = useState("");
   const [tanggalBerangkat, setTanggalBerangkat] = useState("");
 
   return (
-    <View className="gap-y-4 w-96 mx-auto bg-white p-4 rounded-md shadow">
+    <View className="gap-y-4 w-[23rem] mx-auto bg-white p-4 rounded-xl shadow">
       {/* Judul */}
       <View className="flex-row items-center mb-4">
-        <Ionicons name="train" size={24} color="#FFCD33" />
+        <View className="bg-[#FFCD33] rounded-full p-2">
+          <Ionicons name="train" size={24} color="#03314B" />
+        </View>
         <Text
           className="ml-2 text-lg font-bold"
           style={{ fontFamily: "RobotoBold" }}
@@ -60,7 +62,7 @@ export default function FormulirPencarian() {
       {/* Tombol Pencarian Dengan Ikon */}
       <TouchableOpacity
         activeOpacity={0.7}
-        className="bg-[#1CBF8E] py-3 rounded-md mt-4 flex-row items-center justify-center"
+        className="bg-[#03314B] py-3 rounded-md mt-4 flex-row items-center justify-center"
       >
         <Ionicons name="search" size={20} color="white" />
         <Text

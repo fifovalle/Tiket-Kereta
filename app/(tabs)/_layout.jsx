@@ -7,6 +7,7 @@ export default function TataLetakTabs() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
+          paddingHorizontal: 30,
           backgroundColor: "white",
         },
       }}
