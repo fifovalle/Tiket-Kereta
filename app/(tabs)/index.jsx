@@ -48,7 +48,12 @@ export default function Beranda() {
             activeOpacity={0.7}
             className="flex-1 items-center py-2 bg-[#FFF] rounded-lg"
           >
-            <Text className="text-[#03314B]" style={{ fontFamily: "RobotoBold" }}>Pulang Pergi</Text>
+            <Text
+              className="text-[#03314B]"
+              style={{ fontFamily: "RobotoBold" }}
+            >
+              Pulang Pergi
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
