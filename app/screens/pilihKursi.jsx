@@ -1,56 +1,86 @@
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import useTampilkanKursi from "@/hooks/backend/useTampilkanKursi";
 
 export default function PilihKursi() {
   const pengarah = useRouter();
   const [kursiTerpilih, setKursiTerpilih] = useState(null);
 
-  const barisKursi = ["A", "B", "C", "D"];
-  const kolomKursi = [1, 2, 3, 4, 5];
-
-  const kursiTidakTersedia = ["A1", "B2", "C3", "D4", "A5", "B3", "C1", "D2"];
+  const { kursi, sedangMemuatTampilkanKursi } = useTampilkanKursi();
 
   const handlePilihKursi = (kursi) => {
-    if (kursiTidakTersedia.includes(kursi)) return;
-    setKursiTerpilih(kursi === kursiTerpilih ? null : kursi);
+    setKursiTerpilih(kursiTerpilih === kursi ? null : kursi);
   };
 
-  const renderKursi = (baris) => {
-    return kolomKursi.map((kolom) => {
-      const kursi = `${baris}${kolom}`;
-      const kursiTerpilihSaatIni = kursiTerpilih === kursi;
-      const kursiTidakTersediaSaatIni = kursiTidakTersedia.includes(kursi);
+  const renderKursi = (baris, kursiData) => {
+    const kursiKiri = kursiData.filter((data) => data.Kolom <= 2);
+    const kursiKanan = kursiData.filter((data) => data.Kolom >= 3);
 
-      return (
-        <TouchableOpacity
-          key={kursi}
-          className={`w-12 h-12 m-3 flex justify-center items-center rounded-lg shadow-md ${kursiTidakTersediaSaatIni
-            ? "bg-gray-300"
-            : kursiTerpilihSaatIni
-              ? "bg-[#94A3B8] border border-[#94A3B8]"
-              : "bg-white border border-gray-300"
+    const renderSisiKursi = (kursiSisi) => {
+      return kursiSisi.map((data) => {
+        const kursi = `${baris}${data.Kolom}`;
+        const kursiTerpilihSaatIni = kursiTerpilih === kursi;
+        const kursiTidakTersediaSaatIni = data.Status === "Tidak Tersedia";
+
+        return (
+          <TouchableOpacity
+            key={kursi}
+            className={`w-12 h-12 m-2 flex justify-center items-center rounded-lg shadow-md ${
+              kursiTidakTersediaSaatIni
+                ? "bg-gray-300"
+                : kursiTerpilihSaatIni
+                ? "bg-[#94A3B8] border border-[#94A3B8]"
+                : "bg-white border border-gray-300"
             }`}
-          disabled={kursiTidakTersediaSaatIni}
-          onPress={() => handlePilihKursi(kursi)}
-        >
-          <Text
-            className={`font-semibold ${kursiTidakTersediaSaatIni
-              ? "text-gray-400"
-              : kursiTerpilihSaatIni
-                ? "text-white"
-                : "text-[#94A3B8]"
-              }`}
-            style={{ fontFamily: "RobotoBold" }}
+            disabled={kursiTidakTersediaSaatIni}
+            onPress={() => handlePilihKursi(kursi)}
           >
-            {baris}
-            {kolom}
-          </Text>
-        </TouchableOpacity>
-      );
-    });
+            <Text
+              className={`font-semibold ${
+                kursiTidakTersediaSaatIni
+                  ? "text-gray-400"
+                  : kursiTerpilihSaatIni
+                  ? "text-white"
+                  : "text-[#94A3B8]"
+              }`}
+              style={{ fontFamily: "RobotoBold" }}
+            >
+              {kursi}
+            </Text>
+          </TouchableOpacity>
+        );
+      });
+    };
+
+    return (
+      <View className="flex-row justify-between items-center mb-4">
+        {/* Kursi sisi kiri */}
+        <View className="flex-row">{renderSisiKursi(kursiKiri)}</View>
+
+        {/* Lorong */}
+        <View className="w-20" />
+
+        {/* Kursi sisi kanan */}
+        <View className="flex-row">{renderSisiKursi(kursiKanan)}</View>
+      </View>
+    );
   };
+
+  if (sedangMemuatTampilkanKursi) {
+    return (
+      <View className="flex-1 mt-10 justify-center items-center">
+        <ActivityIndicator size="large" color="#03314B" />
+        <Text
+          className="mt-4 text-lg text-black"
+          style={{ fontFamily: "RobotoBold" }}
+        >
+          Memuat Kursi...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-gray-100">
@@ -69,9 +99,9 @@ export default function PilihKursi() {
 
       {/* Grid Kursi */}
       <View className="flex-1 px-6 pt-4">
-        {barisKursi.map((baris) => (
-          <View key={baris} className="flex-row justify-center">
-            {renderKursi(baris)}
+        {kursi.map((data) => (
+          <View key={data.Baris} className="flex-row justify-center">
+            {renderKursi(data.Baris, data.Kursi)}
           </View>
         ))}
       </View>
@@ -110,13 +140,15 @@ export default function PilihKursi() {
           {kursiTerpilih ? `Kursi ${kursiTerpilih}` : "Tidak Ada Kursi Dipilih"}
         </Text>
         <TouchableOpacity
-          className={`mt-4 py-3 items-center rounded-lg shadow-lg ${kursiTerpilih ? "bg-[#03314B]" : "bg-gray-300"
-            }`}
+          className={`mt-4 py-3 items-center rounded-lg shadow-lg ${
+            kursiTerpilih ? "bg-[#03314B]" : "bg-gray-300"
+          }`}
           disabled={!kursiTerpilih}
         >
           <Text
-            className={`text-lg font-semibold ${kursiTerpilih ? "text-white" : "text-gray-500"
-              }`}
+            className={`text-lg font-semibold ${
+              kursiTerpilih ? "text-white" : "text-gray-500"
+            }`}
             style={{ fontFamily: "RobotoBold" }}
           >
             Konfirmasi
