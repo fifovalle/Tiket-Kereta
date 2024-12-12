@@ -45,8 +45,11 @@ const useTampilkanKeranjang = () => {
     ambilKeranjang();
   }, []);
 
+  const jumlahKeranjang = keranjang.length;
+
   return {
     keranjang,
+    jumlahKeranjang,
     sedangMemuatTampilkanKeranjang,
   };
 };

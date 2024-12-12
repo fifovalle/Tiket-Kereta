@@ -6,10 +6,12 @@ import FormulirPencarian from "@/components/formulirPencarian";
 import KontenRutePopuler from "@/components/kontenRutePopuler";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import useMasukanKeKeranjang from "@/hooks/backend/useMasukanKeKeranjang";
+import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
 
 export default function Beranda() {
   const pengarah = useRouter();
 
+  const { jumlahKeranjang } = useTampilkanKeranjang();
   const {
     pesanSnackbar,
     tampilkanSnackbar,
@@ -27,6 +29,12 @@ export default function Beranda() {
           className="p-2 mt-4 items-end"
         >
           <Ionicons name="cart-outline" size={28} color="white" />
+
+          {jumlahKeranjang > 0 && (
+            <View className="absolute bg-red-500 rounded-full h-5 w-5 items-center justify-center top-0 right-0">
+              <Text className="text-white text-xs">{jumlahKeranjang}</Text>
+            </View>
+          )}
         </TouchableOpacity>
 
         <View className="flex items-center justify-between w-full">
