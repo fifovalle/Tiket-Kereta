@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View, Image, TouchableOpacity, ScrollView, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from "react-native";
 
 export default function Masuk() {
   const pengarah = useRouter();
@@ -9,11 +16,17 @@ export default function Masuk() {
 
   const [email, setEmail] = useState("");
   const [kataSandi, setKataSandi] = useState("");
+  const [perlihatkanKataSandi, setPerlihatkanKataSandi] = useState(false);
 
   return (
-    <ScrollView className="px-4"
+    <ScrollView
+      className="px-4"
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       {/* Bagian Teks */}
       <View className="items-center w-full">
@@ -57,16 +70,26 @@ export default function Masuk() {
           />
         </View>
 
-        <View className="bg-white rounded-lg flex-row items-center shadow-md px-4 py-3">
+        <View className="bg-white rounded-lg flex-row items-center shadow-md px-4 mb-4 py-3">
           <Ionicons name="lock-closed-outline" size={24} color="#03314B" />
           <TextInput
             placeholder="Masukkan Kata Sandi"
             value={kataSandi}
             onChangeText={setKataSandi}
-            secureTextEntry
+            secureTextEntry={!perlihatkanKataSandi}
             className="ml-4 flex-1 text-lg text-[#0F172A]"
             placeholderTextColor="#94A3B8"
           />
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setPerlihatkanKataSandi(!perlihatkanKataSandi)}
+          >
+            <Ionicons
+              name={perlihatkanKataSandi ? "eye-off-outline" : "eye-outline"}
+              size={24}
+              color="#03314B"
+            />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -94,7 +117,10 @@ export default function Masuk() {
         >
           Belum punya akun?
         </Text>
-        <TouchableOpacity activeOpacity={0.7} onPress={() => pengarah.push("/daftar")}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => pengarah.push("/daftar")}
+        >
           <Text
             className="text-[#03314B] ml-1"
             style={{ fontFamily: "RobotoBold" }}

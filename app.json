@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Tiket Kereta",
-    "slug": "Tiket Kereta",
+    "slug": "Tiket-Kereta",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "your-app-scheme",
@@ -20,12 +20,26 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.fifovalle.TiketKereta"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "67567062-c7ed-45eb-ab30-1095766c0feb"
+      }
+    }
   }
 }
