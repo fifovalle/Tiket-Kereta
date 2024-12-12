@@ -1,10 +1,34 @@
 import React from "react";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { formatNomorTelpon } from "@/constants/formatNomorTelpon";
+import { useTampilkanPengguna } from "@/hooks/backend/useTampilkanPengguna";
 
 export default function Profil() {
   const pengarah = useRouter();
+
+  const { pengguna, sedangMemuatTampilkanPengguna } = useTampilkanPengguna();
+
+  if (sedangMemuatTampilkanPengguna) {
+    return (
+      <View className="flex-1 mt-10 justify-center items-center">
+        <ActivityIndicator size="large" color="#03314B" />
+        <Text
+          className="mt-4 text-lg text-black"
+          style={{ fontFamily: "RobotoBold" }}
+        >
+          Memuat Data Pengguna...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-[#F5F5F5]">
@@ -24,10 +48,10 @@ export default function Profil() {
               className="text-xl text-center text-[#FFFFFF]"
               style={{ fontFamily: "RobotoBlack" }}
             >
-              Nama Pengguna
+              {pengguna?.Nama_Depan + " " + pengguna?.Nama_Belakang}
             </Text>
             <Text className="text-sm text-center text-[#94A3B8]">
-              namaPengguna@email.com
+              {pengguna?.Email}
             </Text>
           </View>
         </View>
@@ -41,7 +65,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Nama Depan</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              Nama Depan Pengguna
+              {pengguna?.Nama_Depan}
             </Text>
           </View>
         </View>
@@ -52,7 +76,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Nama Belakang</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              Nama Belakang Pengguna
+              {pengguna?.Nama_Belakang}
             </Text>
           </View>
         </View>
@@ -63,7 +87,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Nomor HP</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              0812-3456-7890
+              {formatNomorTelpon(pengguna?.Nomor_Telepon)}
             </Text>
           </View>
         </View>
@@ -74,7 +98,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Email</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              namaPengguna@email.com
+              {pengguna?.Email}
             </Text>
           </View>
         </View>
