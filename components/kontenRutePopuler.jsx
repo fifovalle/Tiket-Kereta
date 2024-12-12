@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import useTampilkanTiketPopuler from "@/hooks/backend/useTampilkanTiketPopuler";
 
-export default function KontenRutePopuler() {
+export default function KontenRutePopuler({ masukkanKeKeranjang }) {
   const { tiketPopuler, sedangMemuatTiketPopuler } = useTampilkanTiketPopuler();
 
   if (sedangMemuatTiketPopuler) {
@@ -48,6 +48,7 @@ export default function KontenRutePopuler() {
         return (
           <TouchableOpacity
             key={id}
+            onPress={() => masukkanKeKeranjang(id)}
             activeOpacity={0.7}
             className="bg-white rounded-lg shadow-md overflow-hidden mb-4"
           >

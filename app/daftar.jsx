@@ -210,7 +210,12 @@ export default function Daftar() {
         onDismiss={() => setTampilkanSnackbar(false)}
         duration={3000}
       >
-        {pesanSnackbar}
+        <Text
+          className="text-center text-white"
+          style={{ fontFamily: "RobotoBold" }}
+        >
+          {pesanSnackbar}
+        </Text>
       </Snackbar>
     </ScrollView>
   );

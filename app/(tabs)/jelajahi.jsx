@@ -1,8 +1,10 @@
 import React from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { formatRupiah } from "@/constants/formatRupiah";
 import useTampilkanTiket from "@/hooks/backend/useTampilkanTiket";
+import useMasukanKeKeranjang from "@/hooks/backend/useMasukanKeKeranjang";
 import {
   View,
   Text,
@@ -16,6 +18,12 @@ export default function Jelajahi() {
   const pengarah = useRouter();
 
   const { tiketPopuler, sedangMemuatTiket } = useTampilkanTiket();
+  const {
+    pesanSnackbar,
+    tampilkanSnackbar,
+    masukkanKeKeranjang,
+    setTampilkanSnackbar,
+  } = useMasukanKeKeranjang();
 
   if (sedangMemuatTiket) {
     return (
@@ -84,6 +92,7 @@ export default function Jelajahi() {
           return (
             <TouchableOpacity
               key={id}
+              onPress={() => masukkanKeKeranjang(id)}
               activeOpacity={0.7}
               className="bg-white rounded-lg shadow-md overflow-hidden mb-4"
             >
@@ -125,6 +134,20 @@ export default function Jelajahi() {
             </TouchableOpacity>
           );
         })}
+
+        <Snackbar
+          visible={tampilkanSnackbar}
+          onDismiss={() => setTampilkanSnackbar(false)}
+          className="mb-20"
+          duration={3000}
+        >
+          <Text
+            className="text-center text-white"
+            style={{ fontFamily: "RobotoBold" }}
+          >
+            {pesanSnackbar}
+          </Text>
+        </Snackbar>
       </ScrollView>
     </View>
   );

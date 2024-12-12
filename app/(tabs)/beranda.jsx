@@ -1,12 +1,21 @@
 import React from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import FormulirPencarian from "@/components/formulirPencarian";
 import KontenRutePopuler from "@/components/kontenRutePopuler";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import useMasukanKeKeranjang from "@/hooks/backend/useMasukanKeKeranjang";
 
 export default function Beranda() {
   const pengarah = useRouter();
+
+  const {
+    pesanSnackbar,
+    tampilkanSnackbar,
+    masukkanKeKeranjang,
+    setTampilkanSnackbar,
+  } = useMasukanKeKeranjang();
 
   return (
     <ScrollView className="flex-1 bg-[#FFFFFF]">
@@ -58,11 +67,25 @@ export default function Beranda() {
         </View>
       </View>
 
+      <Snackbar
+        visible={tampilkanSnackbar}
+        onDismiss={() => setTampilkanSnackbar(false)}
+        className="mb-20 z-10"
+        duration={3000}
+      >
+        <Text
+          className="text-center text-white"
+          style={{ fontFamily: "RobotoBold" }}
+        >
+          {pesanSnackbar}
+        </Text>
+      </Snackbar>
+
       {/* Formulir Pencarian */}
       <FormulirPencarian />
 
       {/* Rute Perjalanan Populer */}
-      <KontenRutePopuler />
+      <KontenRutePopuler masukkanKeKeranjang={masukkanKeKeranjang} />
     </ScrollView>
   );
 }
