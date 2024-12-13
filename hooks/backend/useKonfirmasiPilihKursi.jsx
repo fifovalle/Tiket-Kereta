@@ -33,21 +33,34 @@ const useKonfirmasiPilihKursi = () => {
           if (kursiDocSebelumnya.exists) {
             const kursiDataSebelumnya = kursiDocSebelumnya.data();
             const kursiArraySebelumnya = kursiDataSebelumnya?.Kursi || [];
-            const kursiIndexSebelumnya = kursiArraySebelumnya.findIndex(
-              (k) => `${k.Kolom}` === kursiSebelumnya.slice(1)
-            );
 
-            if (kursiIndexSebelumnya !== -1) {
-              kursiArraySebelumnya[kursiIndexSebelumnya].Status = "Tersedia";
-              await kursiRefSebelumnya.update({
-                Kursi: kursiArraySebelumnya,
-              });
+            if (kursiSebelumnya && typeof kursiSebelumnya === "string") {
+              const kursiIndexSebelumnya = kursiArraySebelumnya.findIndex(
+                (k) => `${k.Kolom}` === kursiSebelumnya.slice(1)
+              );
+
+              if (kursiIndexSebelumnya !== -1) {
+                kursiArraySebelumnya[kursiIndexSebelumnya].Status = "Tersedia";
+                await kursiRefSebelumnya.update({
+                  Kursi: kursiArraySebelumnya,
+                });
+              }
+            } else {
+              const kursiIndexSebelumnya = kursiArraySebelumnya.findIndex(
+                (k) => `${k.Kolom}` === kursiSebelumnya
+              );
+
+              if (kursiIndexSebelumnya !== -1) {
+                kursiArraySebelumnya[kursiIndexSebelumnya].Status = "Tersedia";
+                await kursiRefSebelumnya.update({
+                  Kursi: kursiArraySebelumnya,
+                });
+              }
             }
           }
         }
 
         await keranjangRef.update({
-          ID_Kursi: idKursiYangDiPilih[0],
           Kursi: kursiTerpilih,
           Tanggal_Pemesanan: firestore.FieldValue.serverTimestamp(),
         });
@@ -67,7 +80,6 @@ const useKonfirmasiPilihKursi = () => {
 
           if (kursiIndex !== -1) {
             kursiArray[kursiIndex].Status = "Tidak Tersedia";
-
             await kursiRef.update({
               Kursi: kursiArray,
             });

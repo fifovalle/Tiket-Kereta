@@ -1,15 +1,38 @@
 import React from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
+import usePesan from "@/hooks/backend/usePesan";
 import NomorKursi from "@/components/nomorKursi";
+import { formatRupiah } from "@/constants/formatRupiah";
 import InformasiTiket from "@/components/informasiTiket";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
 
 export default function PilihanTiket() {
   const pengarah = useRouter();
 
   const { keranjang } = useTampilkanKeranjang();
+  const {
+    pesanSnackbar,
+    kirimPesanBooking,
+    tampilkanSnackbar,
+    sedangMemuatPesan,
+  } = usePesan();
+
+  const totalHarga = keranjang.map((keranjang) => {
+    return keranjang.tiket.Harga;
+  });
+
+  const ID_Tiket = keranjang?.ID_Tiket || "";
+
+  const kursi = keranjang?.Kursi || "";
 
   return (
     <View className="flex-1 bg-white">
@@ -55,23 +78,45 @@ export default function PilihanTiket() {
                 Total Perjalanan
               </Text>
               <Text className="text-lg" style={{ fontFamily: "RobotoBold" }}>
-                Rp 100.000
+                {formatRupiah(totalHarga)}
               </Text>
             </View>
             <TouchableOpacity
               activeOpacity={0.7}
-              className="m-4 p-4 w-60 bg-[#03314B] rounded-lg"
+              disabled={sedangMemuatPesan || kursi != ""}
+              onPress={() => kirimPesanBooking(ID_Tiket, kursi, totalHarga)}
+              className={`m-4 p-4 w-60 bg-[#03314B] rounded-lg ${
+                sedangMemuatPesan || kursi != "" ? "opacity-50" : ""
+              }`}
             >
               <Text
                 className="text-center text-white"
                 style={{ fontFamily: "RobotoBold" }}
               >
-                Pesan
+                {sedangMemuatPesan ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  "Pesan Tiket"
+                )}
               </Text>
             </TouchableOpacity>
           </View>
         </>
       )}
+
+      <Snackbar
+        visible={tampilkanSnackbar}
+        onDismiss={() => setTampilkanSnackbar(false)}
+        className="mb-20 z-10"
+        duration={3000}
+      >
+        <Text
+          className="text-center text-white"
+          style={{ fontFamily: "RobotoBold" }}
+        >
+          {pesanSnackbar}
+        </Text>
+      </Snackbar>
     </View>
   );
 }
