@@ -27,9 +27,9 @@ export default function PilihanTiket() {
     sedangMemuatPesan,
   } = usePesan();
 
-  const totalHarga = keranjang.map((keranjang) => {
-    return keranjang.tiket.Harga;
-  });
+  const totalHarga = keranjang.reduce((total, item) => {
+    return total + item.tiket.Harga;
+  }, 0);
 
   const idTiket = keranjang.map((keranjang) => {
     return keranjang.ID_Tiket;
