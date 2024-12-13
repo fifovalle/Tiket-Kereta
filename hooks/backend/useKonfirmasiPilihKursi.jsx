@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useRouter } from "expo-router";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 
 const useKonfirmasiPilihKursi = () => {
+  const pengarah = useRouter();
   const [pesanSnackbar, setPesanSnackbar] = useState("");
   const [tampilkanSnackbar, setTampilkanSnackbar] = useState(false);
   const [sedangMemuatPilihKursi, setSedangMemuatPilihKursi] = useState(false);
@@ -85,6 +87,7 @@ const useKonfirmasiPilihKursi = () => {
             });
 
             setPesanSnackbar("Kursi berhasil dikonfirmasi!");
+            pengarah.push("/screens/keranjang");
             setTampilkanSnackbar(true);
           } else {
             setPesanSnackbar("Kursi tidak ditemukan.");
