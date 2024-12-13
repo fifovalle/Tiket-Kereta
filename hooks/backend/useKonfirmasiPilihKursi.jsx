@@ -20,8 +20,34 @@ const useKonfirmasiPilihKursi = () => {
 
       if (!querySnapshot.empty) {
         const keranjangRef = querySnapshot.docs[0].ref;
+        const keranjangData = querySnapshot.docs[0].data();
+        const kursiSebelumnya = keranjangData.Kursi;
+        const idKursiLama = keranjangData.ID_Kursi;
+
+        if (kursiSebelumnya || idKursiLama !== kursiTerpilih) {
+          const kursiRefSebelumnya = firestore()
+            .collection("kursi")
+            .doc(idKursiYangDiPilih[0]);
+          const kursiDocSebelumnya = await kursiRefSebelumnya.get();
+
+          if (kursiDocSebelumnya.exists) {
+            const kursiDataSebelumnya = kursiDocSebelumnya.data();
+            const kursiArraySebelumnya = kursiDataSebelumnya?.Kursi || [];
+            const kursiIndexSebelumnya = kursiArraySebelumnya.findIndex(
+              (k) => `${k.Kolom}` === kursiSebelumnya.slice(1)
+            );
+
+            if (kursiIndexSebelumnya !== -1) {
+              kursiArraySebelumnya[kursiIndexSebelumnya].Status = "Tersedia";
+              await kursiRefSebelumnya.update({
+                Kursi: kursiArraySebelumnya,
+              });
+            }
+          }
+        }
 
         await keranjangRef.update({
+          ID_Kursi: idKursiYangDiPilih[0],
           Kursi: kursiTerpilih,
           Tanggal_Pemesanan: firestore.FieldValue.serverTimestamp(),
         });
