@@ -23,10 +23,10 @@ export default function NomorKursi() {
         className="m-4 p-4 border rounded-lg border-gray-300 flex-row items-center justify-between"
       >
         <Text className="text-[#94A3B8]" style={{ fontFamily: "RobotoBold" }}>
-          {nomorKursi == "" ? "-" : nomorKursi}
+          Nomor Kursi
         </Text>
         <Text className="text-[#94A3B8]" style={{ fontFamily: "RobotoBold" }}>
-          Pilih Nomor Kursi
+          {nomorKursi == "" ? "-" : nomorKursi}
         </Text>
       </TouchableOpacity>
     </View>
