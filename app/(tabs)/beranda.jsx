@@ -2,8 +2,10 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
+import HasilPencarian from "@/components/hasilPencarian";
 import FormulirPencarian from "@/components/formulirPencarian";
 import KontenRutePopuler from "@/components/kontenRutePopuler";
+import usePencarianTiket from "@/hooks/backend/usePencarianTiket";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import useMasukanKeKeranjang from "@/hooks/backend/useMasukanKeKeranjang";
 import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
@@ -11,6 +13,15 @@ import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
 export default function Beranda() {
   const pengarah = useRouter();
 
+  const {
+    ke,
+    dari,
+    setKe,
+    setDari,
+    cariTiket,
+    hasilPencarian,
+    sedangMemuatPencarianTiket,
+  } = usePencarianTiket();
   const { jumlahKeranjang } = useTampilkanKeranjang();
   const {
     pesanSnackbar,
@@ -22,7 +33,7 @@ export default function Beranda() {
   return (
     <ScrollView className="flex-1 bg-[#FFFFFF]">
       {/* Bagian Kepala */}
-      <View className="h-60 -mb-8 bg-[#03314B] p-4">
+      <View className="h-60 -mb-20 bg-[#03314B] p-4">
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => pengarah.push("/screens/keranjang")}
@@ -50,29 +61,6 @@ export default function Beranda() {
             </Text>
           </View>
         </View>
-
-        {/* Bagian Filter */}
-        <View className="flex-row my-4 px-4 gap-2">
-          <TouchableOpacity
-            activeOpacity={0.7}
-            className="flex-1 items-center py-2 bg-[#FFCD33] w-20 rounded-lg"
-          >
-            <Text className="text-black" style={{ fontFamily: "RobotoBold" }}>
-              Pergi
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            className="flex-1 items-center py-2 bg-[#FFF] rounded-lg"
-          >
-            <Text
-              className="text-[#03314B]"
-              style={{ fontFamily: "RobotoBold" }}
-            >
-              Pulang Pergi
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
 
       <Snackbar
@@ -90,7 +78,23 @@ export default function Beranda() {
       </Snackbar>
 
       {/* Formulir Pencarian */}
-      <FormulirPencarian />
+      <FormulirPencarian
+        ke={ke}
+        dari={dari}
+        setKe={setKe}
+        setDari={setDari}
+        cariTiket={cariTiket}
+        hasilPencarian={hasilPencarian}
+        sedangMemuatPencarianTiket={sedangMemuatPencarianTiket}
+      />
+
+      {/* Hasil Pencarian */}
+      {hasilPencarian.length > 0 && (
+        <HasilPencarian
+          hasilPencarian={hasilPencarian}
+          masukkanKeKeranjang={masukkanKeKeranjang}
+        />
+      )}
 
       {/* Rute Perjalanan Populer */}
       <KontenRutePopuler masukkanKeKeranjang={masukkanKeKeranjang} />
