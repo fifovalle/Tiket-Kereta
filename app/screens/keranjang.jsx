@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
+import auth from "@react-native-firebase/auth";
 import usePesan from "@/hooks/backend/usePesan";
 import NomorKursi from "@/components/nomorKursi";
 import { formatRupiah } from "@/constants/formatRupiah";
+import firestore from "@react-native-firebase/firestore";
 import InformasiTiket from "@/components/informasiTiket";
 import {
   View,
@@ -17,7 +19,6 @@ import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
 
 export default function PilihanTiket() {
   const pengarah = useRouter();
-
   const { keranjang } = useTampilkanKeranjang();
   const {
     pesanSnackbar,
@@ -30,9 +31,43 @@ export default function PilihanTiket() {
     return keranjang.tiket.Harga;
   });
 
-  const ID_Tiket = keranjang?.ID_Tiket || "";
+  const idTiket = keranjang.map((keranjang) => {
+    return keranjang.ID_Tiket;
+  });
 
-  const kursi = keranjang?.Kursi || "";
+  const kursi = keranjang.map((keranjang) => {
+    return keranjang.Kursi;
+  });
+
+  const [kursiTersedia, setKursiTersedia] = useState(true);
+
+  useEffect(() => {
+    const checkKursiAvailability = async () => {
+      try {
+        const keranjangRef = firestore()
+          .collection("keranjang")
+          .where("ID_Pengguna", "==", auth().currentUser.uid);
+
+        const snapshot = await keranjangRef.get();
+
+        if (!snapshot.empty) {
+          const keranjangData = snapshot.docs[0].data();
+          if (keranjangData.Kursi) {
+            setKursiTersedia(true);
+          } else {
+            setKursiTersedia(false);
+          }
+        } else {
+          setKursiTersedia(false);
+        }
+      } catch (error) {
+        console.error("Error mengecek kursi:", error);
+        setKursiTersedia(false);
+      }
+    };
+
+    checkKursiAvailability();
+  }, [idTiket]);
 
   return (
     <View className="flex-1 bg-white">
@@ -49,7 +84,7 @@ export default function PilihanTiket() {
         <View className="w-6" />
       </View>
 
-      {keranjang == 0 ? (
+      {keranjang.length === 0 ? (
         <View className="flex-1 justify-center items-center">
           <Text
             className="text-lg text-black"
@@ -83,10 +118,10 @@ export default function PilihanTiket() {
             </View>
             <TouchableOpacity
               activeOpacity={0.7}
-              disabled={sedangMemuatPesan || kursi != ""}
-              onPress={() => kirimPesanBooking(ID_Tiket, kursi, totalHarga)}
+              disabled={sedangMemuatPesan || !kursiTersedia}
+              onPress={() => kirimPesanBooking(idTiket, kursi, totalHarga)}
               className={`m-4 p-4 w-60 bg-[#03314B] rounded-lg ${
-                sedangMemuatPesan || kursi != "" ? "opacity-50" : ""
+                sedangMemuatPesan || !kursiTersedia ? "opacity-50" : ""
               }`}
             >
               <Text
