@@ -14,6 +14,7 @@ const useTampilkanKursi = () => {
         const kursiData = kursiSnapshot.docs.map((doc) => {
           const data = doc.data();
           return {
+            id: doc.id,
             Baris: data.Baris,
             Kursi: data.Kursi.map((k) => ({
               Kolom: k.Kolom,

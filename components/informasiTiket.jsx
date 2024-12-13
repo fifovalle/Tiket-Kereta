@@ -22,19 +22,6 @@ export default function InformasiTiket() {
     );
   }
 
-  if (keranjang.length === 0) {
-    return (
-      <View className="flex-1 justify-center items-center mt-10">
-        <Text
-          className="text-lg text-black"
-          style={{ fontFamily: "RobotoBold" }}
-        >
-          Keranjang Kosong
-        </Text>
-      </View>
-    );
-  }
-
   return (
     <>
       {keranjang.map((keranjang) => {

@@ -4,9 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import NomorKursi from "@/components/nomorKursi";
 import InformasiTiket from "@/components/informasiTiket";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
 
 export default function PilihanTiket() {
   const pengarah = useRouter();
+
+  const { keranjang } = useTampilkanKeranjang();
 
   return (
     <View className="flex-1 bg-white">
@@ -23,36 +26,52 @@ export default function PilihanTiket() {
         <View className="w-6" />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Informasi Tiket */}
-        <InformasiTiket />
-
-        {/* Nomor Kursi */}
-        <NomorKursi />
-      </ScrollView>
-
-      {/* Total Perjalanan & Tombol */}
-      <View className="bg-white rounded-lg flex-row items-center justify-between">
-        <View className="p-4">
-          <Text className="text-[#94A3B8]" style={{ fontFamily: "RobotoBold" }}>
-            Total Perjalanan
-          </Text>
-          <Text className="text-lg" style={{ fontFamily: "RobotoBold" }}>
-            Rp 100.000
-          </Text>
-        </View>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          className="m-4 p-4 w-60 bg-[#03314B] rounded-lg"
-        >
+      {keranjang == 0 ? (
+        <View className="flex-1 justify-center items-center">
           <Text
-            className="text-center text-white"
+            className="text-lg text-black"
             style={{ fontFamily: "RobotoBold" }}
           >
-            Pesan
+            Keranjang Kosong
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      ) : (
+        <>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {/* Informasi Tiket */}
+            <InformasiTiket />
+
+            {/* Nomor Kursi */}
+            <NomorKursi />
+          </ScrollView>
+
+          {/* Total Perjalanan & Tombol */}
+          <View className="bg-white rounded-lg flex-row items-center justify-between">
+            <View className="p-4">
+              <Text
+                className="text-[#94A3B8]"
+                style={{ fontFamily: "RobotoBold" }}
+              >
+                Total Perjalanan
+              </Text>
+              <Text className="text-lg" style={{ fontFamily: "RobotoBold" }}>
+                Rp 100.000
+              </Text>
+            </View>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className="m-4 p-4 w-60 bg-[#03314B] rounded-lg"
+            >
+              <Text
+                className="text-center text-white"
+                style={{ fontFamily: "RobotoBold" }}
+              >
+                Pesan
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 }

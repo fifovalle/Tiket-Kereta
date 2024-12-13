@@ -1,14 +1,36 @@
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import useTampilkanKursi from "@/hooks/backend/useTampilkanKursi";
+import useKonfirmasiPilihKursi from "@/hooks/backend/useKonfirmasiPilihKursi";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 
 export default function PilihKursi() {
   const pengarah = useRouter();
   const [kursiTerpilih, setKursiTerpilih] = useState(null);
 
   const { kursi, sedangMemuatTampilkanKursi } = useTampilkanKursi();
+  const idKursi = kursi.map((data) => data.id);
+
+  const idKursiYangDiPilih = kursi
+    .flatMap((data) =>
+      data.Kursi.map((kursi) => ({
+        id: data.id,
+        Baris: data.Baris,
+        ...kursi,
+      }))
+    )
+    .filter((data) => `${data.Baris}${data.Kolom}` === kursiTerpilih)
+    .map((data) => data.id);
+
+  const {
+    pesanSnackbar,
+    tampilkanSnackbar,
+    setTampilkanSnackbar,
+    konfirmasiPilihKursi,
+    sedangMemuatPilihKursi,
+  } = useKonfirmasiPilihKursi();
 
   const handlePilihKursi = (kursi) => {
     setKursiTerpilih(kursiTerpilih === kursi ? null : kursi);
@@ -131,7 +153,7 @@ export default function PilihKursi() {
       {/* Konfirmasi */}
       <View className="p-6 border-t border-gray-200 bg-white shadow-lg">
         <Text className="text-[#94A3B8]" style={{ fontFamily: "RobotoBold" }}>
-          Tipe Kursi: Standard
+          Tipe Kursi: Standar
         </Text>
         <Text
           className="text-lg font-bold text-[#0F172A]"
@@ -140,10 +162,14 @@ export default function PilihKursi() {
           {kursiTerpilih ? `Kursi ${kursiTerpilih}` : "Tidak Ada Kursi Dipilih"}
         </Text>
         <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() =>
+            konfirmasiPilihKursi(kursiTerpilih, idKursiYangDiPilih)
+          }
           className={`mt-4 py-3 items-center rounded-lg shadow-lg ${
             kursiTerpilih ? "bg-[#03314B]" : "bg-gray-300"
-          }`}
-          disabled={!kursiTerpilih}
+          } ${sedangMemuatPilihKursi ? "opacity-50" : ""}`}
+          disabled={!kursiTerpilih || sedangMemuatPilihKursi}
         >
           <Text
             className={`text-lg font-semibold ${
@@ -151,10 +177,28 @@ export default function PilihKursi() {
             }`}
             style={{ fontFamily: "RobotoBold" }}
           >
-            Konfirmasi
+            {sedangMemuatPilihKursi ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              "Konfirmasi"
+            )}
           </Text>
         </TouchableOpacity>
       </View>
+
+      <Snackbar
+        visible={tampilkanSnackbar}
+        onDismiss={() => setTampilkanSnackbar(false)}
+        className="mb-20 z-10"
+        duration={3000}
+      >
+        <Text
+          className="text-center text-white"
+          style={{ fontFamily: "RobotoBold" }}
+        >
+          {pesanSnackbar}
+        </Text>
+      </Snackbar>
     </View>
   );
 }
