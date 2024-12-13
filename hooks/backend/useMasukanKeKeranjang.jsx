@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useRouter } from "expo-router";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 
 const useMasukanKeKeranjang = () => {
+  const pengarah = useRouter();
   const [pesanSnackbar, setPesanSnackbar] = useState("");
   const [tampilkanSnackbar, setTampilkanSnackbar] = useState(false);
 
@@ -18,18 +20,16 @@ const useMasukanKeKeranjang = () => {
     try {
       const keranjangQuery = await firestore()
         .collection("keranjang")
-        .where("ID_Tiket", "==", idTiket)
         .where("ID_Pengguna", "==", pengguna.uid)
         .get();
 
       if (!keranjangQuery.empty) {
-        setPesanSnackbar("Tiket ini sudah ada di dalam keranjang.");
+        setPesanSnackbar("Hanya satu tiket yang dapat ada dalam keranjang.");
         setTampilkanSnackbar(true);
         return;
       }
 
       const keranjangRef = firestore().collection("keranjang").doc();
-
       const tiketData = {
         ID_Tiket: idTiket,
         ID_Pengguna: pengguna.uid,
@@ -37,6 +37,7 @@ const useMasukanKeKeranjang = () => {
 
       await keranjangRef.set(tiketData);
 
+      pengarah.push("/screens/keranjang");
       setPesanSnackbar("Tiket berhasil dimasukkan ke keranjang.");
       setTampilkanSnackbar(true);
     } catch (err) {
