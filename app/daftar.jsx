@@ -194,7 +194,7 @@ export default function Daftar() {
         </Text>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => pengarah.push("/")}
+          onPress={() => pengarah.push("/login")}
         >
           <Text
             className="text-[#03314B] ml-1"
