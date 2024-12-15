@@ -75,7 +75,8 @@ Jelajahi karya terbaru dan keterampilan kami dalam dunia pengembangan aplikasi m
 ## 📷 Preview Halaman
 
 Berikut adalah beberapa tampilan halaman TIKET KERETA:
-![Screenshot 2024-12-15 112543](https://github.com/user-attachments/assets/052958d7-4946-4464-a404-11beeffd9a68)
+
+![Gambar](https://github.com/user-attachments/assets/d8859334-b872-4734-901c-ec8cf6f2c08c)
 
 ## 📬 Kontak
 
