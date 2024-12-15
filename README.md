@@ -76,14 +76,6 @@ Jelajahi karya terbaru dan keterampilan kami dalam dunia pengembangan aplikasi m
 
 Berikut adalah beberapa tampilan halaman TIKET KERETA:
 ![Screenshot 2024-12-15 112543](https://github.com/user-attachments/assets/052958d7-4946-4464-a404-11beeffd9a68)
-![1](https://github.com/user-attachments/assets/f6cad4e9-e96a-4145-9bc6-c41ce7c0c129)
-![2](https://github.com/user-attachments/assets/7890ad30-c990-4b1e-9f4a-97bec7734366)
-![3](https://github.com/user-attachments/assets/cfcb683d-7a53-4a9d-86bf-4dccce499ed4)
-![4](https://github.com/user-attachments/assets/dfb5e8f7-523d-4f35-9b16-db14a90cd38e)
-![5](https://github.com/user-attachments/assets/aa55cceb-9275-45c9-9da9-f243b5e8fecd)
-![6](https://github.com/user-attachments/assets/4904be6a-a6b8-4532-b556-20cdd5a924ea)
-![7](https://github.com/user-attachments/assets/6ee906c3-13f4-49a0-99b0-299f0eeb7d5f)
-![8](https://github.com/user-attachments/assets/4b5ffac2-36dc-4148-83c4-0a191c8c723a)
 
 ## 📬 Kontak
 
