@@ -4,8 +4,8 @@ Jelajahi karya terbaru dan keterampilan kami dalam dunia pengembangan aplikasi m
 
 ### 🚧 Status Proyek
 
-- **Status:** Dalam Pengembangan
-- **Tanggal Rilis Diharapkan:** Januari 2025
+- **Status:** Selesai
+- **Tanggal Rilis Diharapkan:** Desember 2024
 
 ### 🚀 Fitur Utama
 
