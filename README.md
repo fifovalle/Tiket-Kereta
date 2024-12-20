@@ -4,8 +4,8 @@ Jelajahi karya terbaru dan keterampilan kami dalam dunia pengembangan aplikasi m
 
 ### 🚧 Status Proyek
 
-- **Status:** Selesai
-- **Tanggal Rilis Diharapkan:** Desember 2024
+- **Status:** Dalam Pengembangan
+- **Tanggal Rilis Diharapkan:** Januari 2025
 
 ### 🚀 Fitur Utama
 
@@ -99,7 +99,7 @@ Kontribusi dan umpan balik dari komunitas sangat dihargai. Jika Anda ingin berko
    ```
    cd TIKET-KERETA
    npm install
-   npx expo start
+   npx expo start -c
    ```
 
 Terima kasih atas antusiasme Anda menantikan kehadiran user interface ini! 🙌
