@@ -61,7 +61,7 @@ export default function Profil() {
               {pengguna?.Nama_Depan + " " + pengguna?.Nama_Belakang}
             </Text>
             <Text className="text-sm text-center text-[#94A3B8]">
-              {pengguna?.Email}
+              {pengguna?.Email || "Tidak Ada"}
             </Text>
           </View>
         </View>
@@ -75,7 +75,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Nama Depan</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              {pengguna?.Nama_Depan}
+              {pengguna?.Nama_Depan || "Tidak Ada"}
             </Text>
           </View>
         </View>
@@ -86,7 +86,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Nama Belakang</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              {pengguna?.Nama_Belakang}
+              {pengguna?.Nama_Belakang || "Tidak Ada"}
             </Text>
           </View>
         </View>
@@ -97,7 +97,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Nomor HP</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              {formatNomorTelpon(pengguna?.Nomor_Telepon)}
+              {formatNomorTelpon(pengguna?.Nomor_Telepon) || "Tidak Ada"}
             </Text>
           </View>
         </View>
@@ -108,7 +108,7 @@ export default function Profil() {
           <View className="ml-4">
             <Text className="text-sm text-[#475569]">Email</Text>
             <Text className="text-lg text-[#0F172A] font-bold">
-              {pengguna?.Email}
+              {pengguna?.Email || "Tidak Ada"}
             </Text>
           </View>
         </View>

@@ -35,6 +35,7 @@ export default function FormulirPencarian({
           <Picker.Item label="Pilih Kota Keberangkatan" value="" />
           <Picker.Item label="Bandung" value="Bandung" />
           <Picker.Item label="Jakarta" value="Jakarta" />
+          <Picker.Item label="Jogja" value="Jogja" />
         </Picker>
       </View>
 
@@ -47,6 +48,7 @@ export default function FormulirPencarian({
           <Picker.Item label="Pilih Kota Tujuan" value="" />
           <Picker.Item label="Bandung" value="Bandung" />
           <Picker.Item label="Jakarta" value="Jakarta" />
+          <Picker.Item label="Jogja" value="Jogja" />
         </Picker>
       </View>
 

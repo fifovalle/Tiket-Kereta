@@ -14,7 +14,7 @@ export default function HasilPencarian({
   hasilPencarian,
   masukkanKeKeranjang,
 }) {
-  const { tiketPopuler, sedangMemuatTiketPopuler } = useTampilkanTiketPopuler();
+  const { sedangMemuatTiketPopuler } = useTampilkanTiketPopuler();
 
   if (sedangMemuatTiketPopuler) {
     return (
