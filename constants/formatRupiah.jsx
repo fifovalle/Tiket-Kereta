@@ -1,3 +1,3 @@
 export function formatRupiah(angka) {
-  return `Rp${angka.toLocaleString("id-ID")}`;
+  return `Rp ${angka.toLocaleString("id-ID")}`;
 }
