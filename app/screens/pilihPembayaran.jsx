@@ -1,8 +1,11 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity } from "react-native";
 
 export default function PilihPembayaran() {
+  const pengarah = useRouter();
+
   const banks = [
     { id: 1, name: "Bank Mandiri", icon: "card" },
     { id: 2, name: "Bank BNI", icon: "card" },
@@ -12,7 +15,7 @@ export default function PilihPembayaran() {
   ];
 
   const [selectedBank, setSelectedBank] = useState(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <View className="flex-1 bg-white">
@@ -38,7 +41,7 @@ export default function PilihPembayaran() {
           onPress={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           <Text className="text-gray-800 text-base font-semibold">
-            Mobile Banking
+            Pilih Bank
           </Text>
           <Ionicons
             name={isDropdownOpen ? "chevron-up" : "chevron-down"}
