@@ -16,6 +16,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
+import Pembayaran from "@/components/pembayaran";
 
 export default function PilihanTiket() {
   const pengarah = useRouter();
@@ -101,6 +102,9 @@ export default function PilihanTiket() {
 
             {/* Nomor Kursi */}
             <NomorKursi />
+
+            {/* Pembayaran */}
+            <Pembayaran />
           </ScrollView>
 
           {/* Total Perjalanan & Tombol */}
