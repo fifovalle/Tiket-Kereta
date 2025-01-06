@@ -1,30 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "expo-router";
+import { Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text, TouchableOpacity } from "react-native";
+import { formatRupiah } from "@/constants/formatRupiah";
+import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
+import useMasukanPembayaran from "@/hooks/backend/useMasukanPembayaran";
+import useTampilkanKeranjang from "@/hooks/backend/useTampilkanKeranjang";
 
 export default function PilihPembayaran() {
   const pengarah = useRouter();
 
-  const banks = [
-    { id: 1, name: "Bank Mandiri", icon: "card" },
-    { id: 2, name: "Bank BNI", icon: "card" },
-    { id: 3, name: "Bank BCA", icon: "card" },
-    { id: 4, name: "Bank CIMB Niaga", icon: "card" },
-    { id: 5, name: "Bank BRI", icon: "card" },
-  ];
+  const {
+    banks,
+    selectedBank,
+    setSelectedBank,
+    isLoading,
+    isDropdownOpen,
+    setIsDropdownOpen,
+    pesanSnackbar,
+    tampilkanSnackbar,
+    setTampilkanSnackbar,
+    masukanPembayaran,
+  } = useMasukanPembayaran();
 
-  const [selectedBank, setSelectedBank] = useState(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { keranjang } = useTampilkanKeranjang();
+
+  const totalHarga = keranjang.reduce((total, item) => {
+    return total + item.tiket.Harga;
+  }, 0);
 
   return (
     <View className="flex-1 bg-white">
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 pt-12 bg-white shadow-sm">
         <TouchableOpacity activeOpacity={0.7} onPress={() => pengarah.back()}>
-          <Text className="text-lg text-gray-800">
-            <Ionicons name="arrow-back" size={24} color="black" />
-          </Text>
+          <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
         <Text className="text-lg" style={{ fontFamily: "RobotoBlack" }}>
           Pilih Pembayaran
@@ -67,9 +77,9 @@ export default function PilihPembayaran() {
                 key={bank.id}
                 activeOpacity={0.8}
                 className={`flex-row items-center justify-between bg-white p-4 rounded-lg mb-2 ${
-                  selectedBank === bank.id ? "border border-[#94A3B8]" : ""
+                  selectedBank?.id === bank.id ? "border border-[#94A3B8]" : ""
                 }`}
-                onPress={() => setSelectedBank(bank.id)}
+                onPress={() => setSelectedBank(bank)}
               >
                 <View className="flex-row items-center">
                   <Ionicons name={bank.icon} size={24} color="#6B7280" />
@@ -77,8 +87,7 @@ export default function PilihPembayaran() {
                     {bank.name}
                   </Text>
                 </View>
-                {/* Move checkbox to the right side */}
-                {selectedBank === bank.id && (
+                {selectedBank?.id === bank.id && (
                   <Ionicons name="checkbox" size={24} color="#03314B" />
                 )}
               </TouchableOpacity>
@@ -98,32 +107,52 @@ export default function PilihPembayaran() {
       >
         <View className="flex-row justify-between items-center">
           <Text className="text-[#94A3B8]">Total Pembayaran</Text>
-          <Text className="text-[#03314B] font-bold">Rp. 200.000</Text>
+          <Text className="text-[#03314B] font-bold">
+            {formatRupiah(totalHarga)}
+          </Text>
         </View>
         {/* Bank selection section */}
         <View className="flex-row justify-between items-center mt-2">
           <Text className="text-[#94A3B8]">Bank yang dipilih</Text>
           <Text className="text-[#03314B] font-bold">
-            {selectedBank
-              ? banks.find((bank) => bank.id === selectedBank).name
-              : "-"}
+            {selectedBank ? selectedBank.name : "-"}
           </Text>
         </View>
         <TouchableOpacity
           activeOpacity={0.8}
           className="bg-[#03314B] py-3 rounded-lg mt-4"
-          onPress={() =>
-            alert(
-              selectedBank
-                ? `Anda memilih ${
-                    banks.find((bank) => bank.id === selectedBank).name
-                  }`
-                : "Silakan pilih bank terlebih dahulu."
-            )
-          }
+          onPress={() => {
+            if (!selectedBank) {
+              setPesanSnackbar("Silakan pilih bank terlebih dahulu.");
+              setTampilkanSnackbar(true);
+              return;
+            }
+
+            masukanPembayaran();
+          }}
         >
-          <Text className="text-white text-center font-bold">Konfirmasi</Text>
+          <Text className="text-white text-center font-bold">
+            {isLoading ? (
+              <ActivityIndicator color="#ffffff" />
+            ) : (
+              "Masukan Pembayaran"
+            )}
+          </Text>
         </TouchableOpacity>
+
+        <Snackbar
+          visible={tampilkanSnackbar}
+          onDismiss={() => setTampilkanSnackbar(false)}
+          className="mb-20 z-10"
+          duration={3000}
+        >
+          <Text
+            className="text-center text-white"
+            style={{ fontFamily: "RobotoBold" }}
+          >
+            {pesanSnackbar}
+          </Text>
+        </Snackbar>
       </View>
     </View>
   );

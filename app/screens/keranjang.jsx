@@ -8,6 +8,7 @@ import NomorKursi from "@/components/nomorKursi";
 import { formatRupiah } from "@/constants/formatRupiah";
 import firestore from "@react-native-firebase/firestore";
 import InformasiTiket from "@/components/informasiTiket";
+import useTampilkanPembayaran from "@/hooks/backend/useTampilkanPembayaran";
 import {
   View,
   Text,
@@ -42,6 +43,8 @@ export default function PilihanTiket() {
 
   const [kursiTersedia, setKursiTersedia] = useState(true);
 
+  const { dataPembayaran } = useTampilkanPembayaran();
+
   useEffect(() => {
     const checkKursiAvailability = async () => {
       try {
@@ -69,6 +72,10 @@ export default function PilihanTiket() {
 
     checkKursiAvailability();
   }, [idTiket]);
+
+  const namaBank = (dataPembayaran || [])
+    .filter((pembayaran) => pembayaran.bank)
+    .map((pembayaran) => pembayaran.bank);
 
   return (
     <View className="flex-1 bg-white">
@@ -104,7 +111,7 @@ export default function PilihanTiket() {
             <NomorKursi />
 
             {/* Pembayaran */}
-            <Pembayaran />
+            <Pembayaran namaBank={namaBank} />
           </ScrollView>
 
           {/* Total Perjalanan & Tombol */}
@@ -117,15 +124,19 @@ export default function PilihanTiket() {
                 Total Perjalanan
               </Text>
               <Text className="text-lg" style={{ fontFamily: "RobotoBold" }}>
-                {formatRupiah(totalHarga)}
+                {namaBank.length > 0
+                  ? formatRupiah(0)
+                  : formatRupiah(totalHarga)}
               </Text>
             </View>
             <TouchableOpacity
               activeOpacity={0.7}
-              disabled={sedangMemuatPesan || !kursiTersedia}
+              disabled={sedangMemuatPesan || !kursiTersedia || !namaBank}
               onPress={() => kirimPesanBooking(idTiket, kursi, totalHarga)}
               className={`m-4 p-4 w-60 bg-[#03314B] rounded-lg ${
-                sedangMemuatPesan || !kursiTersedia ? "opacity-50" : ""
+                sedangMemuatPesan || !kursiTersedia || !namaBank
+                  ? "opacity-50"
+                  : ""
               }`}
             >
               <Text
