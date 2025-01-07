@@ -11,12 +11,6 @@ const useMasukanKeKeranjang = () => {
   const masukkanKeKeranjang = async (idTiket) => {
     const pengguna = auth().currentUser;
 
-    if (!pengguna) {
-      setPesanSnackbar("Pengguna tidak terautentikasi.");
-      setTampilkanSnackbar(true);
-      return;
-    }
-
     try {
       const keranjangQuery = await firestore()
         .collection("keranjang")
@@ -38,8 +32,6 @@ const useMasukanKeKeranjang = () => {
       await keranjangRef.set(tiketData);
 
       pengarah.push("/screens/keranjang");
-      setPesanSnackbar("Tiket berhasil dimasukkan ke keranjang.");
-      setTampilkanSnackbar(true);
     } catch (err) {
       setPesanSnackbar("Terjadi kesalahan saat memasukkan ke keranjang.");
       setTampilkanSnackbar(true);

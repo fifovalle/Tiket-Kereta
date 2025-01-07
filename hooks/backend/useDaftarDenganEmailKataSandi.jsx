@@ -35,13 +35,10 @@ const useDaftarDenganEmailKataSandi = () => {
         Tanggal_Pembuatan_Akun: Timestamp.now(),
       });
 
-      setPesanSnackbar("Pendaftaran berhasil!");
-      setTampilkanSnackbar(true);
       pengarah.push("/(tabs)/beranda");
     } catch (error) {
       setPesanSnackbar(`Terjadi kesalahan: ${error.message}`);
       setTampilkanSnackbar(true);
-      console.error("Terjadi kesalahan:", error.message);
     } finally {
       setSedangMemuatDaftarDenganEmailKataSandi(false);
     }
